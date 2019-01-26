@@ -5,9 +5,15 @@ class BooksController < ApplicationController
   end
 
   def create
-    book = Book.create(book_params)
-    flash[:notice] = "Book added successfully"
-    redirect_to book_path(book)
+    @book = Book.new(book_params)
+
+    if(@book.save)
+      flash[:notice] = "Book added successfully"
+      redirect_to book_path(@book)
+    else
+      flash[:alert] = "Book was not saved"
+      render 'new'
+    end
   end
 
   def show

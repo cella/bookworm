@@ -26,10 +26,18 @@ RSpec.feature "user adds a new book" do
     expect(page).to have_content("180 pages")
   end
 
-  xscenario "unsuccessfully" do
-    # missing required fields
-    # show error
-    # don't create new one
+  scenario "unsuccessfully" do
+    user = User.create(email: "test@test.com", password: "password")
+    sign_in(user.email, user.password)
+    expect(page).to have_current_path("/")
+    click_link "Add a book"
+    expect(page).to have_current_path("/books/new")
+    expect(page).to have_content("Add a new book")
+
+    click_button "Add book"
+
+    expect(page).to have_current_path("/books")
+    expect(page).to have_content("Book was not saved")
   end
 end
 
