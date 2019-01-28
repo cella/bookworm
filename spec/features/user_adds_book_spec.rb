@@ -15,7 +15,7 @@ RSpec.feature "user adds a new book" do
     fill_in "Description", with: "This is a cool book"
     fill_in "Number of pages", with: "180"
 
-    click_button "Add book"
+    click_button "Save"
 
     expect(page).to have_current_path("/books/#{Book.last.id}")
     expect(page).to have_content("Book added successfully")
@@ -34,7 +34,7 @@ RSpec.feature "user adds a new book" do
     expect(page).to have_current_path("/books/new")
     expect(page).to have_content("Add a new book")
 
-    click_button "Add book"
+    click_button "Save"
 
     expect(page).to have_current_path("/books")
     expect(page).to have_content("Book was not saved")

@@ -61,4 +61,57 @@ RSpec.describe BooksController do
       end
     end
   end
+
+  describe "#update" do
+    let(:book) { Book.create(title: "Good title",
+                         description: "Good book",
+                         release_year: 2019,
+                         page_count: 10,
+                         author: "Mr. Rogers")}
+
+    context "successfully" do
+      before do
+        put :update, params: {
+          id: book.id,
+          book: {
+            title: "Even better title",
+            description: "Sweet book",
+            release_year: 2018,
+            page_count: 22,
+            author: "Blues Clues"
+          }
+        }
+      end
+
+      it "updates book with valid params" do
+        book.reload
+        expect(book.title).to eq("Even better title")
+      end
+
+      it "redirects to show" do
+        expect(response).to redirect_to("/books/#{book.id}")
+      end
+
+      it "includes flash message" do
+        expect(flash[:notice]).to be_present
+      end
+    end
+
+    context "unsuccessfully" do
+      before { put :update, params: { id: book.id, book: { title: "" }} }
+
+      it "doesn't save book params" do
+        book.reload
+        expect(book.title).to eq("Good title")
+      end
+
+      it "does not redirect" do
+        expect(response).to render_template(:edit)
+      end
+
+      it "includes error message" do
+        expect(flash[:alert]).to be_present
+      end
+    end
+  end
 end
