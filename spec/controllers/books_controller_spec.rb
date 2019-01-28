@@ -21,6 +21,7 @@ RSpec.describe BooksController do
         end.to change { Book.count }.by(1)
 
         book = Book.last
+
         expect(book.title).to eql('The Great Catsby')
         expect(book.page_count).to eql(120)
         expect(book.release_year).to eql(2020)
@@ -112,6 +113,31 @@ RSpec.describe BooksController do
       it "includes error message" do
         expect(flash[:alert]).to be_present
       end
+    end
+  end
+
+  describe "#destroy" do
+    let(:book) { Book.create(title: "Good title",
+                         description: "Good book",
+                         release_year: 2019,
+                         page_count: 10,
+                         author: "Mr. Rogers")}
+
+    it "deletes book" do
+      expect do
+        delete :destroy, params: { id: book.id }
+      end.to change { Book.count }.by(0)
+    end
+
+    it 'redirects to the book' do
+      delete :destroy, params: { id: book.id }
+      expect(response).to redirect_to("/")
+    end
+
+    it "includes flash message" do
+      delete :destroy, params: { id: book.id }
+
+      expect(flash[:notice]).to be_present
     end
   end
 end
