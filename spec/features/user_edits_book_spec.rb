@@ -29,13 +29,6 @@ RSpec.feature "user edits a book" do
   end
 
   scenario "unsuccessfully" do
-    user = User.create(email: "test@test.com", password: "password")
-    book = Book.create(title: "The Great Gatsby",
-                      author: "F. Scott Fitzgerald",
-                      release_year: 1925,
-                      page_count: 180,
-                      description: "This is a cool book")
-
     sign_in(user.email, user.password)
     visit "/books/#{book.id}"
     click_link "Edit book"

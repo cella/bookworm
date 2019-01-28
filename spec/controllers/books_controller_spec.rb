@@ -117,7 +117,7 @@ RSpec.describe BooksController do
   end
 
   describe "#destroy" do
-    let(:book) { Book.create(title: "Good title",
+    let!(:book) { Book.create(title: "Good title",
                          description: "Good book",
                          release_year: 2019,
                          page_count: 10,
@@ -126,7 +126,7 @@ RSpec.describe BooksController do
     it "deletes book" do
       expect do
         delete :destroy, params: { id: book.id }
-      end.to change { Book.count }.by(0)
+      end.to change { Book.count }.by(-1)
     end
 
     it 'redirects to the book' do

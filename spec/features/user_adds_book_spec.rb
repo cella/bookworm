@@ -1,11 +1,15 @@
 require 'rails_helper'
 
 RSpec.feature "user adds a new book" do
-  scenario "successfully" do
+
+  before(:each) do
     user = User.create(email: "test@test.com", password: "password")
     sign_in(user.email, user.password)
     expect(page).to have_current_path("/")
     click_link "Add a book"
+  end
+
+  scenario "successfully" do
     expect(page).to have_current_path("/books/new")
     expect(page).to have_content("Add a new book")
 
@@ -27,10 +31,6 @@ RSpec.feature "user adds a new book" do
   end
 
   scenario "unsuccessfully" do
-    user = User.create(email: "test@test.com", password: "password")
-    sign_in(user.email, user.password)
-    expect(page).to have_current_path("/")
-    click_link "Add a book"
     expect(page).to have_current_path("/books/new")
     expect(page).to have_content("Add a new book")
 
