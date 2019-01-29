@@ -34,15 +34,15 @@ RSpec.feature "user adds a new book" do
     expect(page).to have_current_path("/books/new")
     expect(page).to have_content("Add a new book")
 
+    fill_in "Author", with: "F. Scott Fitzgerald"
+    fill_in "Year of release", with: "1925"
+    fill_in "Description", with: "This is a cool book"
+    fill_in "Number of pages", with: "180"
+
     click_button "Save"
 
     expect(page).to have_current_path("/books")
     expect(page).to have_content("Book was not saved")
+    expect(page).to have_content("Title can't be blank")
   end
 end
-
-# even further
-# - editing a book
-# - deleting a book
-# - listing all books
-# - searching for a book

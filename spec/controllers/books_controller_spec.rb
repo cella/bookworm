@@ -60,6 +60,12 @@ RSpec.describe BooksController do
 
         expect(flash[:alert]).to be_present
       end
+
+      it "sets errors on @book" do
+        post :create, params: { book: { title: '' } }
+
+        expect(assigns[:book].errors).to be_present
+      end
     end
   end
 

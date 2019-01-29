@@ -36,10 +36,15 @@ RSpec.feature "user edits a book" do
     expect(page).to have_content("Edit The Great Gatsby")
 
     fill_in "Title", with: ""
+    fill_in "Author", with: "F Scoop Whiskgerald"
+    fill_in "Year of release", with: "2004"
+    fill_in "Number of pages", with: "120"
+    fill_in "Description", with: "A cat tragedy"
 
     click_button "Save"
 
     expect(page).to have_current_path("/books/#{book.id}")
     expect(page).to have_content("Book was not saved")
+    expect(page).to have_content("Title can't be blank")
   end
 end
