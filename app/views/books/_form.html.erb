@@ -1,0 +1,22 @@
+<%= form_for @book do |f| %>
+  <% if @book.errors.any? %>
+    <ul>
+      <% @book.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :author %>
+  <%= f.text_field :author %>
+  <%= f.label :release_year, "Year of release" %>
+  <%= f.text_field :release_year %>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+  <%= f.label :page_count, "Number of pages" %>
+  <%= f.text_field :page_count %>
+
+  <%= f.submit "Save" %>
+<% end %>
