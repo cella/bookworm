@@ -7,7 +7,6 @@ RSpec.feature "user deletes a book" do
   scenario "successfully" do
     sign_in(user.email, user.password)
     click_link "View all books"
-
     click_link book.title
     expect(page).to have_current_path "/books/#{book.id}"
     click_link "Delete book"

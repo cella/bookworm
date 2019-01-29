@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
   def index
-    @books = Book.all
+    @books = Book.search(params[:query])
   end
 
   def new
@@ -50,6 +50,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :page_count, :release_year, :description, :author)
+    params.require(:book).permit(:title, :page_count, :release_year, :description, :author, :query)
   end
 end
