@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "User signs in" do
-  let(:user) do
-    User.create(email: 'test@test.com', password: "password", password_confirmation: "password")
-  end
+  let(:user) { create(:user) }
 
   scenario "successfully" do
     sign_in(user.email, user.password)

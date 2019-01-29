@@ -2,15 +2,11 @@ require 'rails_helper'
 
 RSpec.feature "user views all books" do
   scenario "successfully" do
-    user = User.create(email: "test@test.com", password: "password")
+    user = create(:user)
+    book = create(:book)
 
-    book = Book.create(title: "The Great Gatsby",
-                author: "F. Scott Fitzgerald",
-                release_year: 1925,
-                page_count: 180,
-                description: "This is a cool book")
-
-    book2 = Book.create(title: "Anna Karenina",
+    book2 = create(:book,
+                title: "Anna Karenina",
                 author: "Leo Tolstoy",
                 release_year: 1877,
                 page_count: 964,
