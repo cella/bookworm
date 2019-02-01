@@ -153,14 +153,19 @@ RSpec.describe BooksController do
       expect(response).to render_template(:index)
     end
 
-    it "adds filtering via search param" do
-      get :index, params: { query: "Great Gatsby" }
-      expect(assigns(:books)).to eq([book])
-    end
+    context "with the query param" do
+      it "searches books" do
+        query = "Great Gatsby"
+        book_search = instance_double("BookSearch")
+        book_results = instance_double("ActiveRecord::Relation")
 
-    it "returns no results" do
-      get :index, params: { query: "Rad book" }
-      expect(assigns(:books)).to eq([])
+        expect(BookSearch).to receive(:new).with(query) { book_search }
+        expect(book_search).to receive(:call) { book_results }
+
+        get :index, params: { query: query }
+
+        expect(assigns(:books)).to eql(book_results)
+      end
     end
   end
 end

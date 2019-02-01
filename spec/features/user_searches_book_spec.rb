@@ -5,7 +5,7 @@ RSpec.feature "User searches book" do
   let!(:anna_book) { create(:book, :anna)}
 
   before do
-    user = User.create(email: "test@test.com", password: "password")
+    user = create(:user)
     sign_in(user.email, user.password)
     expect(page).to have_current_path("/")
 
