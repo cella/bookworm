@@ -1,22 +1,18 @@
 require 'rails_helper'
 
 RSpec.feature "user edits a book" do
-  let(:user) { User.create(email: "test@test.com", password: "password") }
-  let(:book) do
-    Book.create(title: "The Great Gatsby",
-                author: "F. Scott Fitzgerald",
-                release_year: 1925,
-                page_count: 180,
-                description: "This is a cool book")
-  end
+  let(:user) { create(:user) }
+  let(:book) { create(:book) }
 
-  scenario "successfully" do
+  before do
     sign_in(user.email, user.password)
     visit "/books/#{book.id}"
     click_link "Edit book"
     expect(page).to have_current_path("/books/#{book.id}/edit")
     expect(page).to have_content("Edit The Great Gatsby")
+  end
 
+  scenario "successfully" do
     fill_in "Title", with: "The Great Catsby"
     fill_in "Author", with: "F Scoop Whiskgerald"
     fill_in "Year of release", with: "2004"
@@ -26,15 +22,13 @@ RSpec.feature "user edits a book" do
     click_button "Save"
 
     expect(page).to have_current_path("/books/#{book.id}")
+    expect(page).to have_content("Book was successfully updated")
+    expect(page).to have_content("The Great Catsby")
+    expect(page).to_not have_content("The Great Gatsby")
+    expect(page).to have_content("F Scoop Whiskgerald")
   end
 
   scenario "unsuccessfully" do
-    sign_in(user.email, user.password)
-    visit "/books/#{book.id}"
-    click_link "Edit book"
-    expect(page).to have_current_path("/books/#{book.id}/edit")
-    expect(page).to have_content("Edit The Great Gatsby")
-
     fill_in "Title", with: ""
     fill_in "Author", with: "F Scoop Whiskgerald"
     fill_in "Year of release", with: "2004"

@@ -70,11 +70,7 @@ RSpec.describe BooksController do
   end
 
   describe "#update" do
-    let(:book) { Book.create(title: "Good title",
-                         description: "Good book",
-                         release_year: 2019,
-                         page_count: 10,
-                         author: "Mr. Rogers")}
+    let(:book) { create(:book) }
 
     context "successfully" do
       before do
@@ -109,7 +105,7 @@ RSpec.describe BooksController do
 
       it "doesn't save book params" do
         book.reload
-        expect(book.title).to eq("Good title")
+        expect(book.title).to eq("The Great Gatsby")
       end
 
       it "does not redirect" do
@@ -123,11 +119,7 @@ RSpec.describe BooksController do
   end
 
   describe "#destroy" do
-    let!(:book) { Book.create(title: "Good title",
-                         description: "Good book",
-                         release_year: 2019,
-                         page_count: 10,
-                         author: "Mr. Rogers")}
+    let!(:book) { create(:book) }
 
     it "deletes book" do
       expect do
@@ -144,6 +136,36 @@ RSpec.describe BooksController do
       delete :destroy, params: { id: book.id }
 
       expect(flash[:notice]).to be_present
+    end
+  end
+
+  describe "#index" do
+    let!(:book) { create(:book) }
+    let!(:anna_book) { create(:book, :anna) }
+
+    it "includes list of books" do
+      get :index
+      expect(assigns(:books)).to eq([book, anna_book])
+    end
+
+    it "renders index template" do
+      get :index
+      expect(response).to render_template(:index)
+    end
+
+    context "with the query param" do
+      it "searches books" do
+        query = "Great Gatsby"
+        book_search = instance_double("BookSearch")
+        book_results = instance_double("ActiveRecord::Relation")
+
+        expect(BookSearch).to receive(:new).with(query) { book_search }
+        expect(book_search).to receive(:call) { book_results }
+
+        get :index, params: { query: query }
+
+        expect(assigns(:books)).to eql(book_results)
+      end
     end
   end
 end

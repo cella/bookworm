@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.feature "user adds a new book" do
 
+  let(:user) { create(:user) }
+
   before(:each) do
-    user = User.create(email: "test@test.com", password: "password")
     sign_in(user.email, user.password)
     expect(page).to have_current_path("/")
     click_link "Add a book"
