@@ -7,7 +7,7 @@ RSpec.describe BookSearch do
 
   describe "#call" do
     let!(:gatsby) { create(:book) }
-    let!(:sad_gatsby) { create(:book, title: "the sad gatsby") }
+    let!(:sad_gatsby) { create(:book, title: "the sad gatsby", author: "T. Money") }
     let!(:anna) { create(:book, :anna) }
 
     it "returns books with a similar title" do
@@ -27,6 +27,22 @@ RSpec.describe BookSearch do
 
       it "returns an empty list" do
         expect(search.call).to be_empty
+      end
+    end
+
+    context "when query includes author" do
+      let(:query) { "F. Scott Fitzgerald" }
+
+      it "returns books with a similar author" do
+        expect(search.call).to contain_exactly(gatsby)
+      end
+    end
+
+    context "when query includes description" do
+      let(:query) { "cooler" }
+
+      it "returns books with a similar description" do
+        expect(search.call).to contain_exactly(anna)
       end
     end
   end
