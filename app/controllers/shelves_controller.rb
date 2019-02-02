@@ -5,6 +5,11 @@ class ShelvesController < ApplicationController
 
   def show
     @shelf = Shelf.find(params[:id])
+    @books = @shelf.books
+  end
+
+  def index
+    @shelves = Shelf.all
   end
 
   def create

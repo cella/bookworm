@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   resources :books
   resources :shelves
+  resources :shelved_books, only: [:create]
 end
