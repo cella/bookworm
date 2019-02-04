@@ -1,2 +1,19 @@
 <h1><%= @shelf.title %> Shelf</h1>
-<%= render 'books/list' %>
+<%#= render 'books/list' %>
+
+<% if @shelved_books.any? %>
+  <table>
+    <%= render partial: "books/list_table_header" %>
+
+    <tbody>
+    <% @shelved_books.each do |shelved_book| %>
+      <% book = shelved_book.book %>
+
+      <tr>
+        <%= render partial: "books/list_table_row", locals: { book: book } %>
+        <td><%= link_to "Remove", shelved_book_path(shelved_book), method: :delete, data: { action: "remove" } %></td>
+      </tr>
+    <% end%>
+    </tbody>
+  </table>
+<% end %>

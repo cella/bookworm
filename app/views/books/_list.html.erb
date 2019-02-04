@@ -1,17 +1,11 @@
 <% if @books.any? %>
   <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Year of release</th>
-    </thead>
-    </tbody>
+    <%= render partial: "books/list_table_header" %>
+
+    <tbody>
     <% @books.each do |book| %>
       <tr>
-        <td><%= link_to book.title, book %></td>
-        <td><%= book.author %></td>
-        <td><%= book.release_year %></td>
+        <%= render partial: "books/list_table_row", locals: { book: book } %>
       </tr>
     <% end%>
     </tbody>
