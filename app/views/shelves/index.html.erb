@@ -1,0 +1,17 @@
+<h1>My shelves</h1>
+<% if @shelves.any? %>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+  <% @shelves.each do |shelf| %>
+    <tr>
+      <td><%= link_to shelf.title, shelf %></td>
+    </tr>
+  <% end%>
+    </tbody>
+  </table>
+<% end %>

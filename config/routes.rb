@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   resources :books
-
+  resources :shelves
+  resources :shelved_books, only: [:create]
 end
