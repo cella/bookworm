@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User removes book frome shelf' do
+RSpec.describe 'User removes book from shelf' do
   let(:user) { create(:user) }
   let!(:book) { create(:book) }
   let!(:shelf) { create(:shelf, user: user) }

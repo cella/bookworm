@@ -1,20 +1,24 @@
 <h1><%= @book.title %></h1>
-<%= link_to "Edit book", edit_book_path %>
-<%= link_to "Delete book", book_path, method: :delete %>
 
-<h2>Add to shelf</h2>
-
-<% if available_shelves_for(@book).size > 0 %>
-  <%= form_for ShelvedBook.new do |f| %>
-    <%= f.label :shelf_id, "My shelves" %>
-    <%= f.select :shelf_id, available_shelves_for(@book) %>
-    <%= f.hidden_field :book_id, value: @book.id %>
-    <%= f.submit "Add to shelf" %>
-  <% end %>
-<% else %>
-  You have no available shelves
+<% if current_user %>
+  <%= link_to "Edit book", edit_book_path %>
+  <%= link_to "Delete book", book_path, method: :delete %>
 <% end %>
 
+<% if current_user %>
+  <h2>Add to shelf</h2>
+
+  <% if available_shelves_for(@book).size > 0 %>
+    <%= form_for ShelvedBook.new do |f| %>
+      <%= f.label :shelf_id, "My shelves" %>
+      <%= f.select :shelf_id, available_shelves_for(@book) %>
+      <%= f.hidden_field :book_id, value: @book.id %>
+      <%= f.submit "Add to shelf" %>
+    <% end %>
+  <% else %>
+    You have no available shelves
+  <% end %>
+<% end %>
 <p>by <%= @book.author %></p>
 <p><%= @book.description %></p>
 <small>

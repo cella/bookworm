@@ -1,4 +1,6 @@
 class ShelvesController < ApplicationController
+  before_action :require_authentication
+
   def new
     @shelf = Shelf.new
   end

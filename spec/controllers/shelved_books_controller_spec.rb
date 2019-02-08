@@ -1,9 +1,17 @@
 require "rails_helper"
 
 RSpec.describe ShelvedBooksController do
+  let(:current_user) { create(:user) }
+
+  before do
+    allow(controller).to receive(:current_user) { current_user }
+  end
 
   let!(:book) { create(:book) }
-  let!(:shelf) { create(:shelf) }
+  let!(:shelf) { create(:shelf, user: current_user) }
+
+  # use this for a context to imply managing another user's shelved books
+  # let!(:shelf) { create(:shelf) }
 
   let(:params) do
     {

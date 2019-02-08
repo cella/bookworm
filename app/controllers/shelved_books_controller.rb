@@ -1,4 +1,6 @@
 class ShelvedBooksController < ApplicationController
+  before_action :require_authentication
+
   def create
     shelf = Shelf.find(shelved_book_params[:shelf_id])
     book = Book.find(shelved_book_params[:book_id])
