@@ -11,7 +11,7 @@ RSpec.feature "user adds a new shelf" do
   end
 
   scenario "successfully" do
-    expect(page).to have_current_path("/shelves/new")
+    expect(page).to have_current_path("/users/#{user.id}/shelves/new")
     expect(page).to have_content("Add a new shelf")
 
     fill_in "Title", with: ""
@@ -23,7 +23,7 @@ RSpec.feature "user adds a new shelf" do
     fill_in "Title", with: "To Read"
     click_button "Save"
 
-    expect(page).to have_current_path("/shelves/#{Shelf.last.id}")
+    expect(page).to have_current_path("/users/#{user.id}/shelves/#{Shelf.last.id}")
     expect(page).to have_content("Shelf added successfully")
     expect(page).to have_content("To Read Shelf")
   end

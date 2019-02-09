@@ -9,7 +9,7 @@
   <h2>Add to shelf</h2>
 
   <% if available_shelves_for(@book).size > 0 %>
-    <%= form_for ShelvedBook.new do |f| %>
+    <%= form_for [current_user, ShelvedBook.new] do |f| %>
       <%= f.label :shelf_id, "My shelves" %>
       <%= f.select :shelf_id, available_shelves_for(@book) %>
       <%= f.hidden_field :book_id, value: @book.id %>

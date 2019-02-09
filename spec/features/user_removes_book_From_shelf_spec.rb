@@ -13,7 +13,7 @@ RSpec.describe 'User removes book from shelf' do
   scenario 'successfully' do
     click_link "My shelves"
     click_link shelf.title
-    expect(page).to have_current_path("/shelves/#{shelf.id}")
+    expect(page).to have_current_path("/users/#{user.id}/shelves/#{shelf.id}")
 
     within "table" do
       first('a[data-action=remove]').click

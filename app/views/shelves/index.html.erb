@@ -9,7 +9,7 @@
     <tbody>
   <% @shelves.each do |shelf| %>
     <tr>
-      <td><%= link_to shelf.title, shelf %></td>
+      <td><%= link_to shelf.title, user_shelf_path(shelf.user, shelf) %></td>
     </tr>
   <% end%>
     </tbody>

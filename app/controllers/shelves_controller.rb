@@ -19,7 +19,7 @@ class ShelvesController < ApplicationController
 
     if @shelf.save
       flash[:notice] = "Shelf added successfully"
-      redirect_to shelf_path(@shelf)
+      redirect_to user_shelf_path(current_user, @shelf)
     else
       flash[:alert] = "Shelf was not saved"
       render 'new'

@@ -1,5 +1,5 @@
 <h1>Add a new shelf</h1>
-<%= form_for @shelf do |f| %>
+<%= form_for [current_user, @shelf] do |f| %>
   <% if @shelf.errors.any? %>
     <ul>
       <% @shelf.errors.full_messages.each do |error| %>

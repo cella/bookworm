@@ -15,6 +15,7 @@ RSpec.describe ShelvedBooksController do
 
   let(:params) do
     {
+      user_id: current_user.id,
       shelved_book: {
         shelf_id: shelf.id,
         book_id: book.id
@@ -70,7 +71,8 @@ RSpec.describe ShelvedBooksController do
     let!(:shelved_book) { create(:shelved_book, shelf: shelf, book: book) }
     let(:params) do
       {
-        id: shelved_book.id,
+        user_id: current_user.id,
+        id: shelved_book.id
       }
     end
 
@@ -78,6 +80,11 @@ RSpec.describe ShelvedBooksController do
       expect do
         delete :destroy, params: params
       end.to change { ShelvedBook.count }.by(-1)
+    end
+
+    it "redirects to the shelf" do
+      delete :destroy, params: params
+      expect(response).to redirect_to("/users/#{current_user.id}/shelves/#{shelf.id}")
     end
 
     context "when a shelf doesn't belong to user" do

@@ -36,7 +36,8 @@ RSpec.feature "User is signed out" do
     expect(page).to_not have_content("Add a shelf")
     expect(page).to_not have_content("My shelves")
 
-    visit "/shelves/new"
+    user = create(:user)
+    visit "/users/#{user.id}/shelves/new"
     expect_root_redirect
   end
 end

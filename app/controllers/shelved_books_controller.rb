@@ -17,7 +17,7 @@ class ShelvedBooksController < ApplicationController
     return unless can_manage_shelf?(@shelved_book.shelf)
     @shelved_book.destroy
     flash[:notice] = 'Book was successfully removed'
-    redirect_to shelf_path(@shelved_book.shelf)
+    redirect_to user_shelf_path(current_user, @shelved_book.shelf)
   end
 
   private
