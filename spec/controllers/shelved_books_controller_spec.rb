@@ -45,7 +45,7 @@ RSpec.describe ShelvedBooksController do
   end
 
   describe "#destroy" do
-    let!(:shelved_book) {  ShelvedBook.create(shelf: shelf, book: book) }
+    let!(:shelved_book) { create(:shelved_book, shelf: shelf, book: book) }
     let(:params) do
       {
         id: shelved_book.id,

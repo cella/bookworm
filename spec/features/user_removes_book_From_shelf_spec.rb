@@ -4,7 +4,7 @@ RSpec.describe 'User removes book from shelf' do
   let(:user) { create(:user) }
   let!(:book) { create(:book) }
   let!(:shelf) { create(:shelf, user: user) }
-  let!(:shelved_book) { ShelvedBook.create(shelf: shelf, book: book) }
+  let!(:shelved_book) { create(:shelved_book, shelf: shelf, book: book) }
 
   before(:each) do
     sign_in(user.email, user.password)
