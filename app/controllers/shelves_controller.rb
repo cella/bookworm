@@ -11,7 +11,8 @@ class ShelvesController < ApplicationController
   end
 
   def index
-    @shelves = Shelf.all
+    @user = User.find(params[:user_id])
+    @shelves = @user.shelves
   end
 
   def create

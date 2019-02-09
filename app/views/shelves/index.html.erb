@@ -1,4 +1,12 @@
-<h1>My shelves</h1>
+<h1>
+  <% if current_user == @user %> 
+    My
+  <% else %>
+    <%= @user.email %>'s
+  <% end %>
+  shelves
+</h1>
+
 <% if @shelves.any? %>
   <table>
     <thead>
