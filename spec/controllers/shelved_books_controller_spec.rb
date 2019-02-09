@@ -42,6 +42,28 @@ RSpec.describe ShelvedBooksController do
         expect(flash[:notice]).to be_present
       end
     end
+
+    context "when a shelf doesn't belong to user" do
+      let!(:shelf) { create(:shelf) }
+
+      it "does not create a new shelved book record" do
+        expect do
+          post :create, params: params
+        end.to change { ShelvedBook.count }.by(0)
+      end
+
+      it 'redirects to root path' do
+        post :create, params: params
+
+        expect(response).to redirect_to("/")
+      end
+
+      it 'includes flash message' do
+        post :create, params: params
+
+        expect(flash[:alert]).to be_present
+      end
+    end
   end
 
   describe "#destroy" do
@@ -56,6 +78,30 @@ RSpec.describe ShelvedBooksController do
       expect do
         delete :destroy, params: params
       end.to change { ShelvedBook.count }.by(-1)
+    end
+
+    context "when a shelf doesn't belong to user" do
+      let!(:shelf) { create(:shelf) }
+
+      it "does not destroy the shelved book record" do
+        expect do
+          delete :destroy, params: params
+        end.to change { ShelvedBook.count }.by(0)
+
+        expect(shelved_book.reload).to be_present
+      end
+
+      it 'redirects to root path' do
+        delete :destroy, params: params
+
+        expect(response).to redirect_to("/")
+      end
+
+      it 'includes flash message' do
+        delete :destroy, params: params
+
+        expect(flash[:alert]).to be_present
+      end
     end
   end
 end

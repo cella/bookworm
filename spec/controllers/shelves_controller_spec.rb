@@ -29,6 +29,7 @@ RSpec.describe ShelvesController do
         expect(shelf.user).to eql(current_user)
       end
     end
+
     context "unsuccessfully" do
       it "does not create a new shelf" do
         expect do
