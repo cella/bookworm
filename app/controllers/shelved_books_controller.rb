@@ -9,6 +9,13 @@ class ShelvedBooksController < ApplicationController
     redirect_to book_path(book)
   end
 
+  def destroy
+    @shelved_book = ShelvedBook.find_by(id: params[:id])
+    @shelved_book.destroy
+    flash[:notice] = 'Book was successfully removed'
+    redirect_to shelf_path(@shelved_book.shelf)
+  end
+
   private
 
   def shelved_book_params

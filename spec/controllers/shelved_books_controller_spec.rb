@@ -16,7 +16,7 @@ RSpec.describe ShelvedBooksController do
 
   describe "#create" do
     context "successfully" do
-      it "creates a new book record" do
+      it "creates a new shelved book record" do
         expect do
           post :create, params: params
         end.to change { ShelvedBook.count }.by(1)
@@ -33,6 +33,21 @@ RSpec.describe ShelvedBooksController do
 
         expect(flash[:notice]).to be_present
       end
+    end
+  end
+
+  describe "#destroy" do
+    let!(:shelved_book) {  ShelvedBook.create(shelf: shelf, book: book) }
+    let(:params) do
+      {
+        id: shelved_book.id,
+      }
+    end
+
+    it "deletes the shelved book record" do
+      expect do
+        delete :destroy, params: params
+      end.to change { ShelvedBook.count }.by(-1)
     end
   end
 end

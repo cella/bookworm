@@ -5,7 +5,7 @@ class ShelvesController < ApplicationController
 
   def show
     @shelf = Shelf.find(params[:id])
-    @books = @shelf.books
+    @shelved_books = @shelf.shelved_books.includes(:book)
   end
 
   def index

@@ -5,5 +5,5 @@ Rails.application.routes.draw do
 
   resources :books
   resources :shelves
-  resources :shelved_books, only: [:create]
+  resources :shelved_books, only: [:create, :destroy]
 end
