@@ -1,4 +1,12 @@
-<h1>My shelves</h1>
+<h1>
+  <% if current_user == @user %> 
+    My
+  <% else %>
+    <%= @user.email %>'s
+  <% end %>
+  shelves
+</h1>
+
 <% if @shelves.any? %>
   <table>
     <thead>
@@ -9,7 +17,7 @@
     <tbody>
   <% @shelves.each do |shelf| %>
     <tr>
-      <td><%= link_to shelf.title, shelf %></td>
+      <td><%= link_to shelf.title, user_shelf_path(shelf.user, shelf) %></td>
     </tr>
   <% end%>
     </tbody>

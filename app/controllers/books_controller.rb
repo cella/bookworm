@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  before_action :require_authentication, except: [:index, :show]
 
   def index
     @books = BookSearch.new(params[:query]).call

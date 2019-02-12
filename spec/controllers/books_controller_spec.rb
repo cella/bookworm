@@ -13,6 +13,12 @@ RSpec.describe BooksController do
     }
   end
 
+  let(:current_user) { create(:user) }
+
+  before do
+    allow(controller).to receive(:current_user) { current_user }
+  end
+
   describe "#create" do
     context "successfully" do
       it "creates a new book record" do

@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe ShelvesController do
   let(:params) do
     {
+      user_id: 1,
       shelf: {
         title: 'To Read',
-        user_id: 1
       }
     }
   end
@@ -29,10 +29,11 @@ RSpec.describe ShelvesController do
         expect(shelf.user).to eql(current_user)
       end
     end
+
     context "unsuccessfully" do
       it "does not create a new shelf" do
         expect do
-          post :create, params: { shelf: { title: '' } }
+          post :create, params: { user_id: current_user.id, shelf: { title: '' } }
         end.to change { Shelf.count }.by(0)
       end
     end

@@ -1,4 +1,6 @@
 class ShelvesController < ApplicationController
+  before_action :require_authentication
+
   def new
     @shelf = Shelf.new
   end
@@ -9,7 +11,8 @@ class ShelvesController < ApplicationController
   end
 
   def index
-    @shelves = Shelf.all
+    @user = User.find(params[:user_id])
+    @shelves = @user.shelves
   end
 
   def create
@@ -17,7 +20,7 @@ class ShelvesController < ApplicationController
 
     if @shelf.save
       flash[:notice] = "Shelf added successfully"
-      redirect_to shelf_path(@shelf)
+      redirect_to user_shelf_path(current_user, @shelf)
     else
       flash[:alert] = "Shelf was not saved"
       render 'new'
