@@ -1,5 +1,5 @@
 <h1><%= @shelf.title %> Shelf</h1>
-<%#= render 'books/list' %>
+<%= link_to "Edit shelf", edit_user_shelf_path(current_user, @shelf) %>
 
 <% if @shelved_books.any? %>
   <table>
