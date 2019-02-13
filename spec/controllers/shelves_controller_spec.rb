@@ -38,4 +38,28 @@ RSpec.describe ShelvesController do
       end
     end
   end
+
+  describe "#update" do
+    context "with another user's shelf" do
+      let(:shelf) { create(:shelf) }
+
+      let(:params) do
+        { user_id: shelf.user.id, id: shelf.id, shelf: { title: 'New Title' } }
+      end
+
+      it "redirects to root path" do
+        post :update, params: params
+
+        expect(flash[:alert]).to be_present
+        expect(response).to redirect_to("/")
+      end
+
+      it "does not update the shelf" do
+        post :update, params: params
+
+        shelf.reload
+        expect(shelf.title).to_not eql('New Title')
+      end
+    end
+  end
 end

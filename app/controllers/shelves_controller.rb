@@ -1,4 +1,6 @@
 class ShelvesController < ApplicationController
+  include ShelfAuthorization
+
   before_action :require_authentication
 
   def new
@@ -24,6 +26,23 @@ class ShelvesController < ApplicationController
     else
       flash[:alert] = "Shelf was not saved"
       render 'new'
+    end
+  end
+
+  def edit
+    @shelf = Shelf.find(params[:id])
+    return unless can_manage_shelf?(@shelf)
+  end
+
+  def update
+    @shelf = Shelf.find(params[:id])
+    return unless can_manage_shelf?(@shelf)
+    if @shelf.update(shelf_params)
+      flash[:notice] = "Shelf was successfully updated"
+      redirect_to user_shelf_path(current_user, @shelf)
+    else
+      flash[:alert] = "Shelf could not be updated"
+      render 'edit'
     end
   end
 

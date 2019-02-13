@@ -1,4 +1,6 @@
 class ShelvedBooksController < ApplicationController
+  include ShelfAuthorization
+
   before_action :require_authentication
 
   def create
@@ -21,20 +23,6 @@ class ShelvedBooksController < ApplicationController
   end
 
   private
-
-  def can_manage_shelf?(shelf)
-    if current_user == shelf.user
-      true
-    else
-      authorization_redirect
-      false
-    end
-  end
-
-  def authorization_redirect
-    flash[:alert] = "You don't have permission to manage this shelf"
-    redirect_to root_path
-  end
 
   def shelved_book_params
     params.require(:shelved_book).permit(:book_id, :shelf_id)
