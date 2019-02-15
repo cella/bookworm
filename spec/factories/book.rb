@@ -11,7 +11,15 @@ FactoryBot.define do
       author { 'Leo Tolstoy' }
       page_count { 964 }
       description { "This is an ever cooler book" }
-      release_year {1877 }
+      release_year { 1877 }
+    end
+
+    trait :random do
+      title { Faker::Book.title }
+      author { Faker::Book.author }
+      page_count { rand(50..800) }
+      description { Faker::Lorem.sentence }
+      release_year { rand(1377..Time.current.year) }
     end
   end
 end
