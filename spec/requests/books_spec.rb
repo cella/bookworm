@@ -36,4 +36,19 @@ RSpec.describe "Requests - Books" do
       end
     end
   end
+
+  describe "GET /book" do
+    let(:book) { create(:book) }
+
+    it "returns a book" do
+      get "/books/#{ book.id }", headers: headers
+
+      res_json = JSON.parse(response.body)
+      expect(res_json["title"]).to eql(book.title)
+      expect(res_json["author"]).to eql(book.author)
+      expect(res_json["page_count"]).to eql(book.page_count)
+      expect(res_json["description"]).to eql(book.description)
+      expect(res_json["release_year"]).to eql(book.release_year)
+    end
+  end
 end
