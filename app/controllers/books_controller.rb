@@ -32,12 +32,25 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
 
-    if @book.update(book_params)
-      flash[:notice] = 'Book was successfully updated'
-      redirect_to book_path(@book)
-    else
-      flash[:alert] = "Book was not saved"
-      render 'edit'
+    respond_to do |format|
+      format.html do
+        if update_book
+          flash[:notice] = 'Book was successfully updated'
+          redirect_to book_path(@book)
+        else
+          flash[:alert] = "Book was not saved"
+          render 'edit'
+        end
+      end
+
+      format.json do
+        if update_book
+          render @book
+        else
+          errors = { errors: @book.errors }
+          render json: errors, status: :unprocessable_entity
+        end
+      end
     end
   end
 
@@ -49,6 +62,10 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def update_book
+    @book.update(book_params)
+  end
 
   def book_params
     params.require(:book).permit(:title, :page_count, :release_year, :description, :author, :query)

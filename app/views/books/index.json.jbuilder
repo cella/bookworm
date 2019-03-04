@@ -1,4 +1,3 @@
 json.array! @books do |book|
-  json.title book.title
-  json.author book.author
+  json.partial! 'book', book: book
 end
