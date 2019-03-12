@@ -12,12 +12,25 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
 
-    if(@book.save)
-      flash[:notice] = "Book added successfully"
-      redirect_to book_path(@book)
-    else
-      flash[:alert] = "Book was not saved"
-      render 'new'
+    respond_to do |format|
+      format.html do
+        if(@book.save)
+          flash[:notice] = "Book added successfully"
+          redirect_to book_path(@book)
+        else
+          flash[:alert] = "Book was not saved"
+          render 'new'
+        end
+      end
+
+      format.json do
+        if(@book.save)
+          render @book
+        else
+          errors = { errors: @book.errors }
+          render json: errors, status: :unprocessable_entity
+        end
+      end
     end
   end
 
