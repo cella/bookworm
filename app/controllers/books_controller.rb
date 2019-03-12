@@ -70,8 +70,17 @@ class BooksController < ApplicationController
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
-    flash[:notice] = 'Book was successfully deleted'
-    redirect_to root_path
+
+    respond_to do |format|
+      format.html do
+        flash[:notice] = 'Book was successfully deleted'
+        redirect_to root_path
+      end
+
+      format.json do
+        head :ok
+      end
+    end
   end
 
   private
